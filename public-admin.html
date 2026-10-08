@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Public Management Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    font-family:Arial,sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #050505,
+        #191919,
+        #050505
+    );
+
+    color:white;
+
+    min-height:100vh;
+
+}
+
+
+.container{
+
+    width:92%;
+
+    max-width:800px;
+
+    margin:auto;
+
+    padding:25px 0 50px;
+
+}
+
+
+h1{
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    text-align:center;
+
+    color:#aaa;
+
+    margin-bottom:30px;
+
+}
+
+
+.card{
+
+    background:#151515;
+
+    border:1px solid #292929;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+}
+
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:8px;
+
+    margin-bottom:15px;
+
+    border-radius:10px;
+
+    border:1px solid #444;
+
+    background:#111;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+
+}
+
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#333;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    margin-top:8px;
+
+}
+
+
+button:active{
+
+    background:#555;
+
+}
+
+
+.primary{
+
+    background:#176b3a;
+
+}
+
+
+.logout{
+
+    background:#8b1e1e;
+
+}
+
+
+.back{
+
+    background:#333;
+
+}
+
+
+.error{
+
+    color:#ff6b6b;
+
+    text-align:center;
+
+    margin-top:10px;
+
+}
+
+
+.success{
+
+    color:#5ee58a;
+
+    text-align:center;
+
+    margin-top:10px;
+
+}
+
+
+#loginPage{
+
+    display:block;
+
+}
+
+
+#dashboardPage{
+
+    display:none;
+
+}
+
+
+.section-title{
+
+    font-size:21px;
+
+    margin-top:0;
+
+}
+
+
+.small-text{
+
+    color:#999;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+
+.file-warning{
+
+    color:#ffcc66;
+
+    font-size:13px;
+
+    margin-top:-5px;
+
+    margin-bottom:15px;
+
+}
+
+
+.hidden{
+
+    display:none;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =========================================
+     LOGIN PAGE
+========================================= -->
+
+<div id="loginPage">
+
+
+<h1>
+🔐 Public Management
+</h1>
+
+
+<p class="subtitle">
+
+Authorized management access only
+
+</p>
+
+
+<div class="card">
+
+
+<h2 class="section-title">
+
+Management Login
+
+</h2>
+
+
+<label>
+
+Email
+
+</label>
+
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Enter management email"
+autocomplete="email"
+>
+
+
+<label>
+
+Password
+
+</label>
+
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter management password"
+autocomplete="current-password"
+>
+
+
+<button
+class="primary"
+onclick="loginManagement()">
+
+🔐 Login
+
+</button>
+
+
+<p
+id="loginMessage"
+class="error">
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     DASHBOARD PAGE
+========================================= -->
+
+<div id="dashboardPage">
+
+
+<h1>
+
+⚙️ Management Dashboard
+
+</h1>
+
+
+<p class="subtitle">
+
+Manage Public Family Memories
+
+</p>
+
+
+
+<!-- ADD INFORMATION -->
+
+<div class="card">
+
+
+<h2 class="section-title">
+
+📝 Add Family Information
+
+</h2>
+
+
+<label>
+
+Title
+
+</label>
+
+
+<input
+type="text"
+id="infoTitle"
+placeholder="Example: Family News"
+>
+
+
+<label>
+
+Information
+
+</label>
+
+
+<textarea
+id="infoDescription"
+placeholder="Write family information..."
+></textarea>
+
+
+<label>
+
+Category
+
+</label>
+
+
+<select id="infoCategory">
+
+<option value="News">
+News
+</option>
+
+<option value="Family Information">
+Family Information
+</option>
+
+<option value="Announcements">
+Announcements
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+
+<button
+class="primary"
+onclick="saveInformation()">
+
+➕ Save Information
+
+</button>
+
+
+<p
+id="infoMessage"
+class="success">
+</p>
+
+
+</div>
+
+
+
+<!-- ADD PHOTO / VIDEO -->
+
+<div class="card">
+
+
+<h2 class="section-title">
+
+🖼️🎥 Add Photo or Video
+
+</h2>
+
+
+<label>
+
+Title
+
+</label>
+
+
+<input
+type="text"
+id="fileTitle"
+placeholder="Example: Family Wedding"
+>
+
+
+<label>
+
+Description
+
+</label>
+
+
+<textarea
+id="fileDescription"
+placeholder="Describe this memory..."
+></textarea>
+
+
+<label>
+
+Category
+
+</label>
+
+
+<select id="fileCategory">
+
+<option value="Family Pics">
+Family Pics
+</option>
+
+<option value="Videos and Fun Moments">
+Videos and Fun Moments
+</option>
+
+<option value="Wedding Ceremonies">
+Wedding Ceremonies
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+
+<label>
+
+Choose Photo or Video
+
+</label>
+
+
+<input
+type="file"
+id="familyFile"
+accept="image/*,video/*"
+>
+
+
+<p class="file-warning">
+
+⚠️ Maximum file size: 50 MB.
+
+</p>
+
+
+<button
+class="primary"
+onclick="saveFile()">
+
+⬆️ Upload and Save
+
+</button>
+
+
+<p
+id="fileMessage"
+class="success">
+</p>
+
+
+</div>
+
+
+
+<!-- SAVED INFORMATION -->
+
+<div class="card">
+
+
+<h2 class="section-title">
+
+📋 Saved Family Information
+
+</h2>
+
+
+<div id="informationList">
+
+Loading...
+
+</div>
+
+
+</div>
+
+
+
+<!-- SAVED PHOTOS / VIDEOS -->
+
+<div class="card">
+
+
+<h2 class="section-title">
+
+🖼️🎥 Saved Photos & Videos
+
+</h2>
+
+
+<div id="filesList">
+
+Loading...
+
+</div>
+
+
+</div>
+
+
+
+<!-- LOGOUT -->
+
+<div class="card">
+
+
+<button
+class="logout"
+onclick="logoutManagement()">
+
+🚪 Logout
+
+</button>
+
+
+<button
+class="back"
+onclick="goBack()">
+
+← Back to Family
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
+
+const SUPABASE_URL =
+"https://xifnolhkgdonmmetpkyl.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_iEIud6ZWUjH_64b7NEoOqw_Hdu_hA3X";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function loginManagement(){
+
+    const email =
+    document.getElementById(
+        "loginEmail"
+    ).value.trim();
+
+
+    const password =
+    document.getElementById(
+        "loginPassword"
+    ).value;
+
+
+    const message =
+    document.getElementById(
+        "loginMessage"
+    );
+
+
+    message.innerText =
+    "";
+
+
+    if(!email || !password){
+
+        message.innerText =
+        "Please enter your email and password.";
+
+        return;
+
+    }
+
+
+    message.innerText =
+    "⏳ Signing in...";
+
+
+    const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+        email:email,
+
+        password:password
+
+    });
+
+
+    if(error){
+
+        console.error(error);
+
+        message.innerText =
+        "❌ Login failed: " +
+        error.message;
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "loginPassword"
+    ).value = "";
+
+
+    showDashboard();
+
+}
+
+
+/* =========================================
+   SHOW DASHBOARD
+========================================= */
+
+function showDashboard(){
+
+    document.getElementById(
+        "loginPage"
+    ).style.display =
+    "none";
+
+
+    document.getElementById(
+        "dashboardPage"
+    ).style.display =
+    "block";
+
+
+    showInformation();
+
+    showFiles();
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logoutManagement(){
+
+    await supabaseClient.auth.signOut();
+
+
+    document.getElementById(
+        "dashboardPage"
+    ).style.display =
+    "none";
+
+
+    document.getElementById(
+        "loginPage"
+    ).style.display =
+    "block";
+
+
+    document.getElementById(
+        "loginEmail"
+    ).value = "";
+
+
+    document.getElementById(
+        "loginPassword"
+    ).value = "";
+
+
+    document.getElementById(
+        "loginMessage"
+    ).innerText = "";
+
+}
+
+
+/* =========================================
+   CHECK EXISTING LOGIN
+========================================= */
+
+async function checkLogin(){
+
+    const {data} =
+    await supabaseClient.auth.getSession();
+
+
+    if(
+        data &&
+        data.session
+    ){
+
+        showDashboard();
+
+    }
+
+}
+
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   SAVE FAMILY INFORMATION
+========================================= */
+
+async function saveInformation(){
+
+    const title =
+    document.getElementById(
+        "infoTitle"
+    ).value.trim();
+
+    const description =
+    document.getElementById(
+        "infoDescription"
+    ).value.trim();
+
+    const category =
+    document.getElementById(
+        "infoCategory"
+    ).value;
+
+    const message =
+    document.getElementById(
+        "infoMessage"
+    );
+
+
+    if(!title || !description){
+
+        alert(
+            "Please enter a title and information."
+        );
+
+        return;
+
+    }
+
+
+    message.innerText =
+    "⏳ Saving...";
+
+
+    const {error} =
+    await supabaseClient
+    .from("memories")
+    .insert([{
+
+        title:title,
+
+        description:description,
+
+        category:category,
+
+        visibility:"public",
+
+        image_url:null,
+
+        thumbnail_url:null,
+
+        file_type:null
+
+    }]);
+
+
+    if(error){
+
+        console.error(error);
+
+        message.innerText =
+        "";
+
+        alert(
+            "❌ Could not save information:\n\n" +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "infoTitle"
+    ).value = "";
+
+
+    document.getElementById(
+        "infoDescription"
+    ).value = "";
+
+
+    message.innerText =
+    "✅ Information saved successfully!";
+
+
+    showInformation();
+
+}
+
+
+/* =========================================
+   UPLOAD PUBLIC MEDIA
+========================================= */
+
+async function uploadPublicMediaToSupabase(file){
+
+    const safeName =
+    file.name
+    .replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+    );
+
+
+    const filePath =
+    "public/" +
+    Date.now() +
+    "_" +
+    safeName;
+
+
+    const {error} =
+    await supabaseClient
+    .storage
+    .from("public-media")
+    .upload(
+        filePath,
+        file,
+        {
+            cacheControl:"3600",
+            upsert:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Upload failed:\n\n" +
+            error.message
+        );
+
+        return null;
+
+    }
+
+
+    const {data} =
+    supabaseClient
+    .storage
+    .from("public-media")
+    .getPublicUrl(
+        filePath
+    );
+
+
+    return data.publicUrl;
+
+}
+
+
+/* =========================================
+   CREATE VIDEO THUMBNAIL
+========================================= */
+
+function createVideoThumbnail(file){
+
+    return new Promise(
+        function(resolve){
+
+            const video =
+            document.createElement(
+                "video"
+            );
+
+
+            const canvas =
+            document.createElement(
+                "canvas"
+            );
+
+
+            const url =
+            URL.createObjectURL(file);
+
+
+            video.src = url;
+
+            video.muted = true;
+
+            video.playsInline = true;
+
+            video.preload =
+            "metadata";
+
+
+            video.onloadedmetadata =
+            function(){
+
+                video.currentTime =
+                0.1;
+
+            };
+
+
+            video.onseeked =
+            function(){
+
+                canvas.width =
+                video.videoWidth;
+
+
+                canvas.height =
+                video.videoHeight;
+
+
+                const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+                ctx.drawImage(
+                    video,
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+
+                canvas.toBlob(
+                    function(blob){
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+                        resolve(blob);
+
+                    },
+                    "image/jpeg",
+                    0.8
+                );
+
+            };
+
+
+            video.onerror =
+            function(){
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+                resolve(null);
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   UPLOAD VIDEO THUMBNAIL
+========================================= */
+
+async function createAndUploadVideoThumbnail(file){
+
+    const thumbnail =
+    await createVideoThumbnail(
+        file
+    );
+
+
+    if(!thumbnail){
+
+        return null;
+
+    }
+
+
+    const thumbnailPath =
+    "thumbnails/" +
+    Date.now() +
+    "_thumbnail.jpg";
+
+
+    const {error} =
+    await supabaseClient
+    .storage
+    .from("public-media")
+    .upload(
+        thumbnailPath,
+        thumbnail,
+        {
+            cacheControl:"3600",
+            upsert:false,
+            contentType:"image/jpeg"
+        }
+    );
+
+
+    if(error){
+
+        console.error(
+            "Thumbnail upload error:",
+            error
+        );
+
+        return null;
+
+    }
+
+
+    const {data} =
+    supabaseClient
+    .storage
+    .from("public-media")
+    .getPublicUrl(
+        thumbnailPath
+    );
+
+
+    return data.publicUrl;
+
+}
+
+
+/* =========================================
+   SAVE PHOTO / VIDEO
+========================================= */
+
+async function saveFile(){
+
+    const title =
+    document.getElementById(
+        "fileTitle"
+    ).value.trim();
+
+
+    const description =
+    document.getElementById(
+        "fileDescription"
+    ).value.trim();
+
+
+    const category =
+    document.getElementById(
+        "fileCategory"
+    ).value;
+
+
+    const file =
+    document.getElementById(
+        "familyFile"
+    ).files[0];
+
+
+    const message =
+    document.getElementById(
+        "fileMessage"
+    );
+
+
+    if(!title || !file){
+
+        alert(
+            "Please enter a title and select a file."
+        );
+
+        return;
+
+    }
+
+
+    /* 50 MB LIMIT */
+
+    const maxFileSize =
+    50 * 1024 * 1024;
+
+
+    if(file.size > maxFileSize){
+
+        alert(
+            "❌ File is too large.\n\n" +
+            "Maximum allowed size is 50 MB."
+        );
+
+
+        message.innerText =
+        "❌ File is too large. Maximum size is 50 MB.";
+
+
+        return;
+
+    }
+
+
+    message.innerText =
+    "⏳ Uploading...";
+
+
+    /* UPLOAD MAIN FILE */
+
+    const publicUrl =
+    await uploadPublicMediaToSupabase(
+        file
+    );
+
+
+    if(!publicUrl){
+
+        message.innerText = "";
+
+        return;
+
+    }
+
+
+    /* CREATE VIDEO THUMBNAIL */
+
+    let thumbnailUrl =
+    null;
+
+
+    if(
+        file.type &&
+        file.type.startsWith(
+            "video/"
+        )
+    ){
+
+        message.innerText =
+        "⏳ Creating video preview...";
+
+
+        thumbnailUrl =
+        await createAndUploadVideoThumbnail(
+            file
+        );
+
+    }
+
+
+    /* SAVE DATABASE RECORD */
+
+    const {error} =
+    await supabaseClient
+    .from("memories")
+    .insert([{
+
+        title:title,
+
+        description:description,
+
+        category:category,
+
+        image_url:publicUrl,
+
+        thumbnail_url:thumbnailUrl,
+
+        file_type:file.type,
+
+        visibility:"public"
+
+    }]);
+
+
+    if(error){
+
+        console.error(error);
+
+
+        alert(
+            "❌ Could not save memory:\n\n" +
+            error.message
+        );
+
+
+        message.innerText = "";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "fileTitle"
+    ).value = "";
+
+
+    document.getElementById(
+        "fileDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "familyFile"
+    ).value = "";
+
+
+    message.innerText =
+    "✅ Saved successfully!";
+
+
+    alert(
+        "✅ Photo/Video saved successfully!"
+    );
+
+
+    showFiles();
+
+}
+
+
+/* =========================================
+   SHOW INFORMATION
+========================================= */
+
+async function showInformation(){
+
+    const list =
+    document.getElementById(
+        "informationList"
+    );
+
+
+    if(!list){
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+    "⏳ Loading information...";
+
+
+    const {data,error} =
+    await supabaseClient
+    .from("memories")
+    .select("*")
+    .eq("visibility","public")
+    .is("image_url",null)
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+
+        list.innerHTML =
+        "❌ Could not load information.";
+
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if(!data || data.length === 0){
+
+        list.innerHTML =
+        "<p>No information saved yet.</p>";
+
+
+        return;
+
+    }
+
+
+    data.forEach(
+        function(memory){
+
+            const box =
+            document.createElement(
+                "div"
+            );
+
+
+            box.style.padding =
+            "15px";
+
+
+            box.style.marginBottom =
+            "15px";
+
+
+            box.style.background =
+            "#222";
+
+
+            box.style.borderRadius =
+            "12px";
+
+
+            box.innerHTML = `
+
+                <h3>
+                    ${escapeHTML(
+                        memory.title
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        memory.description || ""
+                    )}
+                </p>
+
+                <small>
+                    Category:
+                    ${escapeHTML(
+                        memory.category || "Other"
+                    )}
+                </small>
+
+                <br><br>
+
+                <button
+                onclick="editInformation(${memory.id})">
+
+                    ✏️ Edit
+
+                </button>
+
+                <button
+                onclick="deleteInformation(${memory.id})">
+
+                    🗑️ Delete
+
+                </button>
+
+            `;
+
+
+            list.appendChild(box);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   EDIT INFORMATION
+========================================= */
+
+async function editInformation(id){
+
+    const {data,error} =
+    await supabaseClient
+    .from("memories")
+    .select("*")
+    .eq("id",id)
+    .single();
+
+
+    if(error){
+
+        alert(
+            "❌ Could not load information:\n\n" +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    const newTitle =
+    prompt(
+        "Enter new title:",
+        data.title || ""
+    );
+
+
+    if(newTitle === null){
+
+        return;
+
+    }
+
+
+    const newDescription =
+    prompt(
+        "Enter new information:",
+        data.description || ""
+    );
+
+
+    if(newDescription === null){
+
+        return;
+
+    }
+
+
+    const newCategory =
+    prompt(
+        "Enter category:",
+        data.category || "Other"
+    );
+
+
+    if(newCategory === null){
+
+        return;
+
+    }
+
+
+    const {error:updateError} =
+    await supabaseClient
+    .from("memories")
+    .update({
+
+        title:newTitle,
+
+        description:newDescription,
+
+        category:newCategory
+
+    })
+    .eq("id",id);
+
+
+    if(updateError){
+
+        alert(
+            "❌ Update failed:\n\n" +
+            updateError.message
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "✅ Information updated!"
+    );
+
+
+    showInformation();
+
+}
+
+
+/* =========================================
+   DELETE INFORMATION
+========================================= */
+
+async function deleteInformation(id){
+
+    const answer =
+    confirm(
+        "⚠️ Are you sure you want to delete this information?"
+    );
+
+
+    if(!answer){
+
+        return;
+
+    }
+
+
+    const {error} =
+    await supabaseClient
+    .from("memories")
+    .delete()
+    .eq("id",id);
+
+
+    if(error){
+
+        alert(
+            "❌ Delete failed:\n\n" +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "✅ Information deleted!"
+    );
+
+
+    showInformation();
+
+}
+
+
+/* =========================================
+   SHOW PHOTOS / VIDEOS
+========================================= */
+
+
+async function showFiles(){
+
+    const list =
+    document.getElementById(
+        "filesList"
+    );
+
+    if(!list){
+        return;
+    }
+
+    list.innerHTML =
+    "⏳ Loading photos and videos...";
+
+    const {data,error} =
+    await supabaseClient
+    .from("memories")
+    .select("*")
+    .eq("visibility","public")
+    .not("image_url","is",null)
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+    if(error){
+
+        console.error(error);
+
+        list.innerHTML =
+        "❌ Could not load photos and videos.";
+
+        return;
+    }
+
+    list.innerHTML = "";
+
+    if(!data || data.length === 0){
+
+        list.innerHTML =
+        "<p>No photos or videos saved yet.</p>";
+
+        return;
+    }
+
+    data.forEach(
+        function(memory){
+
+            const box =
+            document.createElement(
+                "div"
+            );
+
+            box.style.padding =
+            "15px";
+
+            box.style.marginBottom =
+            "15px";
+
+            box.style.background =
+            "#222";
+
+            box.style.borderRadius =
+            "12px";
+
+            const isVideo =
+            memory.file_type &&
+            memory.file_type.startsWith(
+                "video/"
+            );
+
+            let preview = "";
+
+            if(isVideo){
+
+                preview = `
+                    <video
+                        src="${memory.image_url}"
+                        poster="${memory.thumbnail_url || ""}"
+                        controls
+                        style="
+                            width:100%;
+                            max-height:300px;
+                            border-radius:10px;
+                            margin-top:10px;
+                        "
+                    ></video>
+                `;
+
+            }else{
+
+                preview = `
+                    <img
+                        src="${memory.image_url}"
+                        alt="${escapeHTML(memory.title)}"
+                        style="
+                            width:100%;
+                            max-height:300px;
+                            object-fit:cover;
+                            border-radius:10px;
+                            margin-top:10px;
+                        "
+                    >
+                `;
+
+            }
+
+            box.innerHTML = `
+
+                <h3>
+                    ${escapeHTML(
+                        memory.title
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        memory.description || ""
+                    )}
+                </p>
+
+                <small>
+                    Category:
+                    ${escapeHTML(
+                        memory.category || "Other"
+                    )}
+                </small>
+
+                ${preview}
+
+                <br>
+
+                <button
+                onclick="deleteFile(${memory.id}, '${memory.image_url}')">
+
+                    🗑️ Delete
+
+                </button>
+
+            `;
+
+            list.appendChild(box);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   DELETE PHOTO / VIDEO
+========================================= */
+
+async function deleteFile(id,url){
+
+    const answer =
+    confirm(
+        "⚠️ Are you sure you want to delete this photo/video?"
+    );
+
+    if(!answer){
+        return;
+    }
+
+    const {error} =
+    await supabaseClient
+    .from("memories")
+    .delete()
+    .eq("id",id);
+
+    if(error){
+
+        alert(
+            "❌ Delete failed:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+    alert(
+        "✅ Photo/Video deleted!"
+    );
+
+    showFiles();
+
+}
+
+
+/* =========================================
+   BACK TO FAMILY
+========================================= */
+
+function goBack(){
+
+    window.location.href =
+    "family.html";
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+checkLogin();
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+  
