@@ -25,6 +25,9 @@ body {
     color: white;
 }
 
+
+/* MAIN HOME */
+
 .home {
     min-height: 100vh;
 
@@ -41,16 +44,22 @@ body {
             rgba(0,0,0,0.65),
             rgba(20,5,35,0.9)
         ),
-        url("images/family.jpg");
+        url("https://xifnolhkgdonmmetpkyl.supabase.co/storage/v1/object/public/public-media/public/1791377120456_PXL_20261006_110548895.MP.jpg");
 
     background-size: cover;
     background-position: center;
 }
 
+
+/* CONTENT */
+
 .content {
     width: 100%;
     max-width: 500px;
 }
+
+
+/* TITLE */
 
 h1 {
     font-size: 38px;
@@ -60,6 +69,9 @@ h1 {
         0 3px 15px rgba(0,0,0,0.8);
 }
 
+
+/* SUBTITLE */
+
 .subtitle {
     font-size: 18px;
     color: #ddd;
@@ -67,6 +79,9 @@ h1 {
 
     margin: 15px auto 30px;
 }
+
+
+/* ENTER BUTTON */
 
 .enterBtn {
 
@@ -91,10 +106,17 @@ h1 {
     transition: 0.3s;
 }
 
+
 .enterBtn:hover {
+
     transform: scale(1.05);
+
     background: #eee;
+
 }
+
+
+/* FOOTER */
 
 .footer {
 
@@ -112,6 +134,9 @@ h1 {
     font-size: 13px;
 }
 
+
+/* MOBILE */
+
 @media (max-width: 500px) {
 
     h1 {
@@ -128,7 +153,9 @@ h1 {
 
 </head>
 
+
 <body>
+
 
 <div class="home">
 
@@ -137,6 +164,7 @@ h1 {
         <h1 id="siteTitle">
             Digital Family Memories
         </h1>
+
 
         <div class="subtitle" id="welcomeText">
 
@@ -150,6 +178,7 @@ h1 {
 
         </div>
 
+
         <a
             href="family.html"
             class="enterBtn"
@@ -157,9 +186,11 @@ h1 {
             🚪 Join Family
         </a>
 
+
     </div>
 
 </div>
+
 
 <div class="footer" id="footerText">
 
@@ -169,6 +200,8 @@ h1 {
 
 
 <script>
+
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://xifnolhkgdonmmetpkyl.supabase.co";
@@ -183,6 +216,8 @@ window.supabase.createClient(
 );
 
 
+/* LOAD HOME SETTINGS */
+
 async function loadHomeSettings() {
 
     const { data, error } =
@@ -192,40 +227,71 @@ async function loadHomeSettings() {
         .limit(1)
         .single();
 
+
     if (error || !data) {
+
         return;
+
     }
+
+
+    /* SITE TITLE */
 
     if (data.site_title) {
 
         document.getElementById("siteTitle")
-        .textContent = data.site_title;
+        .textContent =
+            data.site_title;
 
-        document.title = data.site_title;
+        document.title =
+            data.site_title;
+
     }
 
+
+    /* WELCOME TEXT */
 
     if (data.welcome_text) {
 
         document.getElementById("welcomeText")
         .innerHTML =
             data.welcome_text;
+
     }
 
+
+    /* FOOTER */
 
     if (data.footer_text) {
 
         document.getElementById("footerText")
         .textContent =
             data.footer_text;
+
+    }
+
+
+    /* BACKGROUND IMAGE */
+
+    if (data.background_image_url) {
+
+        document.querySelector(".home")
+        .style.backgroundImage =
+            "linear-gradient(rgba(0,0,0,0.65),rgba(20,5,35,0.9)),url('" +
+            data.background_image_url +
+            "')";
+
     }
 
 }
 
 
+/* START */
+
 loadHomeSettings();
 
 </script>
+
 
 </body>
 
