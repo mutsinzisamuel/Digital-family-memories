@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Developer Management</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#050505,#191919,#050505);
+    color:white;
+    min-height:100vh;
+}
+
+.container{
+    width:92%;
+    max-width:700px;
+    margin:auto;
+    padding:25px 0 50px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#151515;
+    border:1px solid #292929;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+}
+
+.card h2{
+    margin-top:0;
+    font-size:20px;
+}
+
+label{
+    display:block;
+    margin:14px 0 7px;
+    color:#ddd;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #444;
+    background:#111;
+    color:white;
+    font-size:15px;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+button,a.button{
+    display:block;
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:11px;
+    background:#333;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    font-size:15px;
+    margin-top:12px;
+    cursor:pointer;
+}
+
+.primary{
+    background:#176b3a;
+}
+
+.danger{
+    background:#7a2020;
+}
+
+.back{
+    background:#222;
+}
+
+.hidden{
+    display:none;
+}
+
+.message{
+    text-align:center;
+    padding:12px;
+    margin:10px 0;
+    border-radius:10px;
+    color:#ccc;
+}
+
+.preview{
+    width:100%;
+    max-height:300px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-top:12px;
+    display:none;
+}
+
+.small{
+    color:#999;
+    font-size:13px;
+    line-height:1.5;
+}
+
+#dashboard{
+    display:none;
+}
+</style></head><body><div class="container"><div id="loginPage"><h1>⚙️ Developer Management</h1><p class="subtitle">
+System management area
+</p><div class="card"><label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="Developer email"
+
+«»
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="Developer password"
+
+«»
+
+<button
+class="primary"
+onclick="developerLogin()"
+
+«»
+
+Login
+</button>
+
+<div id="loginMessage" class="message"></div></div></div><div id="dashboard"><h1>⚙️ Developer Dashboard</h1><p class="subtitle">
+Digital Family Memories system management
+</p><div class="card"><h2>🏠 Home Page Settings</h2><p class="small">
+Change the main information and appearance of the website home page.
+</p><label>Website Title</label>
+
+<input
+id="homeTitle"
+type="text"
+placeholder="Digital Family Memories"
+
+«»
+
+<label>Welcome Text</label>
+
+<textarea
+id="homeSubtitle"
+placeholder="Welcome to our family space."
+></textarea><label>Footer Text</label>
+
+<input
+id="homeFooter"
+type="text"
+placeholder="❤️ Family • Memories • Together"
+
+«»
+
+<label>Home Page Background Image</label>
+
+<input
+id="homeImage"
+type="file"
+accept="image/*"
+
+«»
+
+<img
+id="imagePreview"
+class="preview"
+
+«»
+
+<button
+class="primary"
+onclick="saveHomeSettings()"
+
+«»
+
+💾 Save Home Page Settings
+</button>
+
+<div id="homeMessage" class="message"></div></div><div class="card"><h2>🌍 Public Content Management</h2><p class="small">
+Manage public family information, photos and videos.
+</p><a
+href="public-admin.html"
+class="button"
+
+«»
+
+Open Public Management
+</a>
+
+</div><div class="card"><h2>🔧 System Information</h2><p class="small">
+This area is for website and system management.
+Private Family files and passwords are not displayed here.
+</p></div><button
+class="danger"
+onclick="logoutDeveloper()"
+
+«»
+
+🔒 Logout Developer
+</button>
+
+<a
+href="index.html"
+class="button back"
+
+«»
+
+← Back to Website
+</a>
+
+</div></div><script>
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://xifnolhkgdonmmetpkyl.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_iEIud6ZWUjH_64b7NEoOqw_Hdu_hA3X";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* LOGIN */
+
+async function developerLogin(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+const message =
+document.getElementById("loginMessage");
+
+message.textContent =
+"Logging in...";
+
+if(!email || !password){
+
+message.textContent =
+"Please enter email and password.";
+
+return;
+
+}
+
+const {error} =
+await supabaseClient.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(error){
+
+message.textContent =
+"Incorrect email or password.";
+
+return;
+
+}
+
+showDashboard();
+
+}
+
+
+/* SHOW DASHBOARD */
+
+async function showDashboard(){
+
+const {
+data:{session}
+} =
+await supabaseClient.auth.getSession();
+
+if(!session){
+
+return;
+
+}
+
+document.getElementById("loginPage")
+.classList.add("hidden");
+
+document.getElementById("dashboard")
+.style.display="block";
+
+loadHomeSettings();
+
+}
+
+
+/* HOME SETTINGS STORAGE */
+
+async function loadHomeSettings(){
+
+const savedTitle =
+localStorage.getItem("homeTitle");
+
+const savedSubtitle =
+localStorage.getItem("homeSubtitle");
+
+const savedFooter =
+localStorage.getItem("homeFooter");
+
+document.getElementById("homeTitle").value =
+savedTitle ||
+"Digital Family Memories";
+
+document.getElementById("homeSubtitle").value =
+savedSubtitle ||
+"Welcome to our family space.";
+
+document.getElementById("homeFooter").value =
+savedFooter ||
+"❤️ Family • Memories • Together";
+
+const savedImage =
+localStorage.getItem("homeImage");
+
+if(savedImage){
+
+const preview =
+document.getElementById("imagePreview");
+
+preview.src =
+savedImage;
+
+preview.style.display="block";
+
+}
+
+}
+
+
+/* SAVE HOME SETTINGS */
+
+async function saveHomeSettings(){
+
+const title =
+document.getElementById("homeTitle").value.trim();
+
+const subtitle =
+document.getElementById("homeSubtitle").value.trim();
+
+const footer =
+document.getElementById("homeFooter").value.trim();
+
+const imageInput =
+document.getElementById("homeImage");
+
+localStorage.setItem(
+"homeTitle",
+title
+);
+
+localStorage.setItem(
+"homeSubtitle",
+subtitle
+);
+
+localStorage.setItem(
+"homeFooter",
+footer
+);
+
+if(imageInput.files.length){
+
+const file =
+imageInput.files[0];
+
+if(file.size > 5 * 1024 * 1024){
+
+document.getElementById("homeMessage")
+.textContent =
+"Image must be smaller than 5 MB.";
+
+return;
+
+}
+
+const reader =
+new FileReader();
+
+reader.onload=function(event){
+
+localStorage.setItem(
+"homeImage",
+event.target.result
+);
+
+document.getElementById("imagePreview").src =
+event.target.result;
+
+document.getElementById("imagePreview")
+.style.display="block";
+
+document.getElementById("homeMessage")
+.textContent =
+"Home page settings saved.";
+
+};
+
+reader.readAsDataURL(file);
+
+}else{
+
+document.getElementById("homeMessage")
+.textContent =
+"Home page settings saved.";
+
+}
+
+}
+
+
+/* LOGOUT */
+
+async function logoutDeveloper(){
+
+await supabaseClient.auth.signOut();
+
+location.reload();
+
+}
+
+
+/* CHECK SESSION */
+
+window.addEventListener(
+"load",
+function(){
+
+showDashboard();
+
+}
+);
+
+</script></body>
+</html>
