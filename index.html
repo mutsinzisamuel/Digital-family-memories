@@ -10,6 +10,8 @@
 
 <title>Digital Family Memories</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 * {
@@ -22,9 +24,6 @@ body {
     background: #000;
     color: white;
 }
-
-
-/* MAIN HOME */
 
 .home {
     min-height: 100vh;
@@ -48,24 +47,10 @@ body {
     background-position: center;
 }
 
-
-/* CONTENT */
-
 .content {
     width: 100%;
     max-width: 500px;
 }
-
-
-/* LOGO */
-
-.logo {
-    font-size: 70px;
-    margin-bottom: 10px;
-}
-
-
-/* TITLE */
 
 h1 {
     font-size: 38px;
@@ -75,9 +60,6 @@ h1 {
         0 3px 15px rgba(0,0,0,0.8);
 }
 
-
-/* SUBTITLE */
-
 .subtitle {
     font-size: 18px;
     color: #ddd;
@@ -85,9 +67,6 @@ h1 {
 
     margin: 15px auto 30px;
 }
-
-
-/* ENTER BUTTON */
 
 .enterBtn {
 
@@ -112,17 +91,10 @@ h1 {
     transition: 0.3s;
 }
 
-
 .enterBtn:hover {
-
     transform: scale(1.05);
-
     background: #eee;
-
 }
-
-
-/* FOOTER */
 
 .footer {
 
@@ -140,17 +112,10 @@ h1 {
     font-size: 13px;
 }
 
-
-/* MOBILE */
-
 @media (max-width: 500px) {
 
     h1 {
         font-size: 32px;
-    }
-
-    .logo {
-        font-size: 60px;
     }
 
     .subtitle {
@@ -161,30 +126,19 @@ h1 {
 
 </style>
 
-
-
-
-
 </head>
 
-
 <body>
-
 
 <div class="home">
 
     <div class="content">
 
-
-        
-
-
-        <h1>
+        <h1 id="siteTitle">
             Digital Family Memories
         </h1>
 
-
-        <div class="subtitle">
+        <div class="subtitle" id="welcomeText">
 
             Welcome to our family space.
 
@@ -196,7 +150,6 @@ h1 {
 
         </div>
 
-
         <a
             href="family.html"
             class="enterBtn"
@@ -204,18 +157,75 @@ h1 {
             🚪 Join Family
         </a>
 
-
     </div>
 
 </div>
 
-
-<div class="footer">
+<div class="footer" id="footerText">
 
     ❤️ Family • Memories • Together
 
 </div>
 
+
+<script>
+
+const SUPABASE_URL =
+"https://xifnolhkgdonmmetpkyl.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_iEIud6ZWUjH_64b7NEoOqw_Hdu_hA3X";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+async function loadHomeSettings() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("site_settings")
+        .select("*")
+        .limit(1)
+        .single();
+
+    if (error || !data) {
+        return;
+    }
+
+    if (data.site_title) {
+
+        document.getElementById("siteTitle")
+        .textContent = data.site_title;
+
+        document.title = data.site_title;
+    }
+
+
+    if (data.welcome_text) {
+
+        document.getElementById("welcomeText")
+        .innerHTML =
+            data.welcome_text;
+    }
+
+
+    if (data.footer_text) {
+
+        document.getElementById("footerText")
+        .textContent =
+            data.footer_text;
+    }
+
+}
+
+
+loadHomeSettings();
+
+</script>
 
 </body>
 
