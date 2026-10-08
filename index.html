@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Digital Family Memories</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: white;
+}
+
+
+/* MAIN HOME */
+
+.home {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(20,5,35,0.9)
+        ),
+        url("images/family.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* CONTENT */
+
+.content {
+    width: 100%;
+    max-width: 500px;
+}
+
+
+/* LOGO */
+
+.logo {
+    font-size: 70px;
+    margin-bottom: 10px;
+}
+
+
+/* TITLE */
+
+h1 {
+    font-size: 38px;
+    margin: 10px 0;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,0.8);
+}
+
+
+/* SUBTITLE */
+
+.subtitle {
+    font-size: 18px;
+    color: #ddd;
+    line-height: 1.6;
+
+    margin: 15px auto 30px;
+}
+
+
+/* ENTER BUTTON */
+
+.enterBtn {
+
+    display: inline-block;
+
+    padding: 15px 35px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: white;
+    color: black;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.5);
+
+    transition: 0.3s;
+}
+
+
+.enterBtn:hover {
+
+    transform: scale(1.05);
+
+    background: #eee;
+
+}
+
+
+/* FOOTER */
+
+.footer {
+
+    position: fixed;
+
+    bottom: 15px;
+
+    left: 0;
+    right: 0;
+
+    text-align: center;
+
+    color: #aaa;
+
+    font-size: 13px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .logo {
+        font-size: 60px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+}
+
+</style>
+
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="home">
+
+    <div class="content">
+
+
+        
+
+
+        <h1>
+            Digital Family Memories
+        </h1>
+
+
+        <div class="subtitle">
+
+            Welcome to our family space.
+
+            <br>
+
+            A place to keep our
+            <strong>memories, stories, news and special moments</strong>
+            together.
+
+        </div>
+
+
+        <a
+            href="family.html"
+            class="enterBtn"
+        >
+            🚪 Join Family
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+
+    ❤️ Family • Memories • Together
+
+</div>
+
+
+</body>
+
+</html>
