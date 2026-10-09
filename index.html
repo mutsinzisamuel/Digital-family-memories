@@ -1,300 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Family Memories</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
 
-body {
+html, body {
     margin: 0;
+    width: 100%;
+    min-height: 100%;
     font-family: Arial, sans-serif;
-    background: #000;
-    color: white;
+    background: #F5F0E5;
+    color: #243638;
 }
 
-
-/* MAIN HOME */
-
-.home {
+body {
     min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
 
+/* HOME IMAGE */
+.home {
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: center;
-
-    padding: 25px;
-
+    padding: 18px 15px;
     background:
         linear-gradient(
-            rgba(0,0,0,0.65),
-            rgba(20,5,35,0.9)
+            rgba(20, 42, 45, 0.16),
+            rgba(20, 42, 45, 0.38)
         ),
-        
-        url(https://xifnolhkgdonmmetpkyl.supabase.co/storage/v1/object/public/public-media/public/1791490615257_1791483552953_2.jpg);
-        
-
+        url("https://xifnolhkgdonmmetpkyl.supabase.co/storage/v1/object/public/public-media/public/1791490615257_1791483552953_2.jpg");
     background-size: cover;
     background-position: center;
 }
 
-
-/* CONTENT */
-
 .content {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
 }
-
-
-/* TITLE */
 
 h1 {
-    font-size: 38px;
+    font-size: 32px;
     margin: 10px 0;
-
-    text-shadow:
-        0 3px 15px rgba(0,0,0,0.8);
+    color: #FFFFFF;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.75);
 }
-
-
-/* SUBTITLE */
 
 .subtitle {
-    font-size: 18px;
-    color: #ddd;
-    line-height: 1.6;
-
-    margin: 15px auto 30px;
+    font-size: 15px;
+    color: #FFFFFF;
+    line-height: 1.5;
+    margin: 12px auto 20px;
+    text-shadow: 0 2px 7px rgba(0,0,0,0.85);
 }
-
-
-/* ENTER BUTTON */
 
 .enterBtn {
-
     display: inline-block;
-
-    padding: 15px 35px;
-
-    border: none;
+    padding: 13px 28px;
     border-radius: 30px;
-
-    background: white;
-    color: black;
-
-    font-size: 17px;
+    background: #F4C95D;
+    color: #243638;
+    font-size: 15px;
     font-weight: bold;
-
     text-decoration: none;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.5);
-
-    transition: 0.3s;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.2s;
 }
-
 
 .enterBtn:hover {
-
-    transform: scale(1.05);
-
-    background: #eee;
-
+    background: #FFDA7A;
+    transform: translateY(-2px);
 }
 
+/* NOTIFICATIONS AT THE BOTTOM */
+.notificationSection {
+    flex: 0 0 auto;
+    background: #F5F0E5;
+    padding: 9px 12px 7px;
+    text-align: center;
+    border-top: 1px solid #DED4C1;
+}
 
-/* FOOTER */
+#notificationBox {
+    margin: 0 auto;
+    padding: 9px 12px;
+    width: 100%;
+    max-width: 360px;
+    background: #FFFCF5;
+    border: 1px solid #DED4C1;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(54,61,47,0.08);
+}
+
+#notificationBox h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
+    color: #244B47;
+}
+
+#notificationBox p {
+    margin: 5px 0;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #536461;
+}
+
+#subscribeNotifications {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 22px;
+    background: #146B63;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#subscribeNotifications:hover {
+    background: #0D554F;
+}
+
+#subscribeNotifications:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+#notificationMessage {
+    overflow-wrap: anywhere;
+    margin-bottom: 0;
+}
 
 .footer {
-
-    position: fixed;
-
-    bottom: 15px;
-
-    left: 0;
-    right: 0;
-
+    flex: 0 0 auto;
+    padding: 6px 8px;
     text-align: center;
-
-    color: #aaa;
-
-    font-size: 13px;
+    color: #536461;
+    font-size: 11px;
+    background: #EAE2D3;
 }
 
-
-/* MOBILE */
-
+/* SMALL PHONE SCREENS */
 @media (max-width: 500px) {
-
     h1 {
-        font-size: 32px;
+        font-size: 27px;
     }
 
     .subtitle {
-        font-size: 16px;
+        font-size: 13px;
+        margin: 10px auto 16px;
     }
 
+    .home {
+        padding: 10px 14px;
+    }
+
+    .enterBtn {
+        padding: 11px 23px;
+        font-size: 14px;
+    }
+
+    #notificationBox {
+        padding: 7px 10px;
+    }
+
+    #notificationBox h3 {
+        font-size: 14px;
+    }
+
+    #notificationBox p {
+        font-size: 11px;
+    }
+
+    #subscribeNotifications {
+        padding: 9px 15px;
+        font-size: 12px;
+    }
 }
 
+/* SHORT PHONE SCREENS */
+@media (max-height: 650px) {
+    h1 {
+        font-size: 24px;
+        margin: 5px 0;
+    }
+
+    .subtitle {
+        margin: 7px auto 10px;
+        line-height: 1.35;
+    }
+
+    .home {
+        padding: 8px 12px;
+    }
+
+    .notificationSection {
+        padding: 5px 10px;
+    }
+
+    #notificationBox {
+        padding: 5px 8px;
+    }
+
+    #notificationBox p {
+        margin: 3px 0;
+    }
+
+    .footer {
+        padding: 4px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
-<div class="home">
-
+<!-- HOME PAGE -->
+<section class="home">
     <div class="content">
 
-        <h1 id="siteTitle">
-            Digital Family Memories
-        </h1>
-
+        <h1 id="siteTitle">Digital Family Memories</h1>
 
         <div class="subtitle" id="welcomeText">
-
             Welcome to our family space.
-
             <br>
-
             A place to keep our
             <strong>memories, stories, news and special moments</strong>
             together.
-
         </div>
 
-
-        <a
-            href="family.html"
-            class="enterBtn"
-        >
+        <a href="family.html" class="enterBtn">
             🚪 Join Family
         </a>
 
+    </div>
+</section>
+
+<!-- BOTTOM NOTIFICATION BOX -->
+<section class="notificationSection">
+    <div id="notificationBox">
+
+        <h3>🔔 Family Notifications</h3>
+
+        <p>Get alerts for new public family updates.</p>
+
+        <button id="subscribeNotifications" type="button">
+            Enable Notifications
+        </button>
+
+        <p id="notificationMessage" role="status" aria-live="polite">
+            Subscribe to request notifications.
+        </p>
 
     </div>
+</section>
 
-</div>
-
-
-<div class="footer" id="footerText">
-
+<footer class="footer" id="footerText">
     ❤️ Family • Memories • Together
-
-</div>
-
+</footer>
 
 <script>
-
-/* SUPABASE */
-
+/* MAIN WEBSITE SUPABASE PROJECT */
 const SUPABASE_URL =
-"https://xifnolhkgdonmmetpkyl.supabase.co";
+    "https://xifnolhkgdonmmetpkyl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_iEIud6ZWUjH_64b7NEoOqw_Hdu_hA3X";
+    "sb_publishable_iEIud6ZWUjH_64b7NEoOqw_Hdu_hA3X";
 
-const supabaseClient =
-window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
-
-/* LOAD HOME SETTINGS */
-
+/* LOAD HOME PAGE SETTINGS */
 async function loadHomeSettings() {
+    try {
+        const { data, error } = await supabaseClient
+            .from("site_settings")
+            .select("*")
+            .limit(1)
+            .single();
 
-    const { data, error } =
-        await supabaseClient
-        .from("site_settings")
-        .select("*")
-        .limit(1)
-        .single();
+        if (error || !data) {
+            console.warn("Home settings were not loaded.");
+            return;
+        }
 
+        if (data.site_title) {
+            document.getElementById("siteTitle").textContent =
+                data.site_title;
 
-    if (error || !data) {
+            document.title = data.site_title;
+        }
 
-        return;
+        if (data.welcome_text) {
+            const welcome =
+                document.getElementById("welcomeText");
 
+            welcome.textContent = data.welcome_text;
+            welcome.style.whiteSpace = "pre-line";
+        }
+
+        if (data.footer_text) {
+            document.getElementById("footerText").textContent =
+                data.footer_text;
+        }
+
+        if (data.background_image_url) {
+            const imageURL = data.background_image_url;
+
+            if (imageURL.startsWith("https://")) {
+                document.querySelector(".home").style.backgroundImage =
+                    "linear-gradient(rgba(20,42,45,0.16),rgba(20,42,45,0.38)),url(" +
+                    JSON.stringify(imageURL) + ")";
+            }
+        }
+
+    } catch (error) {
+        console.error("Could not load home settings:", error);
     }
-
-
-    /* SITE TITLE */
-
-    if (data.site_title) {
-
-        document.getElementById("siteTitle")
-        .textContent =
-            data.site_title;
-
-        document.title =
-            data.site_title;
-
-    }
-
-
-    /* WELCOME TEXT */
-
-    if (data.welcome_text) {
-
-        document.getElementById("welcomeText")
-        .innerHTML =
-            data.welcome_text;
-
-    }
-
-
-    /* FOOTER */
-
-    if (data.footer_text) {
-
-        document.getElementById("footerText")
-        .textContent =
-            data.footer_text;
-
-    }
-
-
-    /* BACKGROUND IMAGE */
-
-    if (data.background_image_url) {
-
-        document.querySelector(".home")
-        .style.backgroundImage =
-            "linear-gradient(rgba(0,0,0,0.65),rgba(20,5,35,0.9)),url('" +
-            data.background_image_url +
-            "')";
-
-    }
-
 }
-
-
-/* START */
 
 loadHomeSettings();
 
+/* REGISTER SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./sw.js")
+            .then(function () {
+                console.log("Notification service worker is ready.");
+            })
+            .catch(function (error) {
+                console.error(
+                    "Service worker registration failed:",
+                    error
+                );
+            });
+    });
+}
+
+/* PUBLIC FAMILY UPDATE NOTIFICATIONS */
+const VAPID_PUBLIC_KEY =
+    "BIfG6lv2b_aZWqHLbZj09H2ccAHVcuitEev3cntVm5g8rU_kAx9i_eLmqQHpr66nC5zV3zWm-oUGoZonkXu6pgo";
+
+const NOTIFICATION_FUNCTION =
+    "https://brhryltwlfjhwwjovcdq.supabase.co/functions/v1/family-notifications";
+
+/* NOTIFICATION PROJECT PUBLISHABLE KEY */
+const NOTIFICATION_SUPABASE_KEY =
+    "sb_publishable__y9mnVnV_QzD5vuVJXrzIQ_IkVlpvh1";
+
+/* CONVERT VAPID PUBLIC KEY */
+function decodeVapidKey(key) {
+    const padding = "=".repeat((4 - key.length % 4) % 4);
+
+    const base64 = (key + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+    const raw = atob(base64);
+
+    return Uint8Array.from(
+        raw,
+        char => char.charCodeAt(0)
+    );
+}
+
+/* REQUEST NOTIFICATION SUBSCRIPTION */
+document.getElementById("subscribeNotifications")
+    .addEventListener("click", async function () {
+
+        const message =
+            document.getElementById("notificationMessage");
+
+        const button = this;
+
+        try {
+            if (
+                !("serviceWorker" in navigator) ||
+                !("PushManager" in window) ||
+                !("Notification" in window)
+            ) {
+                message.textContent =
+                    "This browser does not support push notifications.";
+                return;
+            }
+
+            button.disabled = true;
+            message.textContent = "Preparing subscription...";
+
+            const permission =
+                await Notification.requestPermission();
+
+            if (permission !== "granted") {
+                message.textContent =
+                    "Notification permission was not granted. Check browser settings.";
+                return;
+            }
+
+            const registration =
+                await navigator.serviceWorker.ready;
+
+            let subscription =
+                await registration.pushManager.getSubscription();
+
+            if (!subscription) {
+                subscription =
+                    await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey:
+                            decodeVapidKey(VAPID_PUBLIC_KEY)
+                    });
+            }
+
+            message.textContent = "Sending your request...";
+
+            const response = await fetch(NOTIFICATION_FUNCTION, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": NOTIFICATION_SUPABASE_KEY,
+                    "Authorization":
+                        "Bearer " + NOTIFICATION_SUPABASE_KEY
+                },
+                body: JSON.stringify({
+                    action: "subscribe",
+                    subscription: subscription.toJSON()
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.error ||
+                    "The subscription request failed."
+                );
+            }
+
+            message.textContent =
+                "Your request was sent and is awaiting approval.";
+
+        } catch (error) {
+            console.error(
+                "Notification subscription error:",
+                error
+            );
+
+            message.textContent =
+                "Could not complete request: " +
+                (error.message || "Please try again.");
+
+        } finally {
+            button.disabled = false;
+        }
+    });
 </script>
 
-
 </body>
-
-</html>
+      </html>
