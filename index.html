@@ -8,9 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
     margin: 0;
@@ -28,7 +26,6 @@ body {
     flex-direction: column;
 }
 
-/* HOME IMAGE */
 .home {
     flex: 1 1 auto;
     min-height: 0;
@@ -38,10 +35,7 @@ body {
     text-align: center;
     padding: 18px 15px;
     background:
-        linear-gradient(
-            rgba(20, 42, 45, 0.16),
-            rgba(20, 42, 45, 0.38)
-        ),
+        linear-gradient(rgba(20,42,45,.16),rgba(20,42,45,.38)),
         url("https://xifnolhkgdonmmetpkyl.supabase.co/storage/v1/object/public/public-media/public/1791490615257_1791483552953_2.jpg");
     background-size: cover;
     background-position: center;
@@ -55,16 +49,16 @@ body {
 h1 {
     font-size: 32px;
     margin: 10px 0;
-    color: #FFFFFF;
-    text-shadow: 0 3px 12px rgba(0,0,0,0.75);
+    color: #fff;
+    text-shadow: 0 3px 12px rgba(0,0,0,.75);
 }
 
 .subtitle {
     font-size: 15px;
-    color: #FFFFFF;
+    color: #fff;
     line-height: 1.5;
     margin: 12px auto 20px;
-    text-shadow: 0 2px 7px rgba(0,0,0,0.85);
+    text-shadow: 0 2px 7px rgba(0,0,0,.85);
 }
 
 .enterBtn {
@@ -76,8 +70,8 @@ h1 {
     font-size: 15px;
     font-weight: bold;
     text-decoration: none;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.25);
-    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 5px 18px rgba(0,0,0,.25);
+    transition: background .2s, transform .2s;
 }
 
 .enterBtn:hover {
@@ -85,7 +79,6 @@ h1 {
     transform: translateY(-2px);
 }
 
-/* NOTIFICATIONS AT THE BOTTOM */
 .notificationSection {
     flex: 0 0 auto;
     background: #F5F0E5;
@@ -102,7 +95,7 @@ h1 {
     background: #FFFCF5;
     border: 1px solid #DED4C1;
     border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(54,61,47,0.08);
+    box-shadow: 0 3px 10px rgba(54,61,47,.08);
 }
 
 #notificationBox h3 {
@@ -123,11 +116,10 @@ h1 {
     border: none;
     border-radius: 22px;
     background: #146B63;
-    color: #FFFFFF;
+    color: #fff;
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
 #subscribeNotifications:hover {
@@ -135,7 +127,7 @@ h1 {
 }
 
 #subscribeNotifications:disabled {
-    opacity: 0.6;
+    opacity: .6;
     cursor: wait;
 }
 
@@ -153,37 +145,24 @@ h1 {
     background: #EAE2D3;
 }
 
-/* SMALL PHONE SCREENS */
 @media (max-width: 500px) {
-    h1 {
-        font-size: 27px;
-    }
+    h1 { font-size: 27px; }
 
     .subtitle {
         font-size: 13px;
         margin: 10px auto 16px;
     }
 
-    .home {
-        padding: 10px 14px;
-    }
+    .home { padding: 10px 14px; }
 
     .enterBtn {
         padding: 11px 23px;
         font-size: 14px;
     }
 
-    #notificationBox {
-        padding: 7px 10px;
-    }
-
-    #notificationBox h3 {
-        font-size: 14px;
-    }
-
-    #notificationBox p {
-        font-size: 11px;
-    }
+    #notificationBox { padding: 7px 10px; }
+    #notificationBox h3 { font-size: 14px; }
+    #notificationBox p { font-size: 11px; }
 
     #subscribeNotifications {
         padding: 9px 15px;
@@ -191,7 +170,6 @@ h1 {
     }
 }
 
-/* SHORT PHONE SCREENS */
 @media (max-height: 650px) {
     h1 {
         font-size: 24px;
@@ -203,35 +181,19 @@ h1 {
         line-height: 1.35;
     }
 
-    .home {
-        padding: 8px 12px;
-    }
-
-    .notificationSection {
-        padding: 5px 10px;
-    }
-
-    #notificationBox {
-        padding: 5px 8px;
-    }
-
-    #notificationBox p {
-        margin: 3px 0;
-    }
-
-    .footer {
-        padding: 4px;
-    }
+    .home { padding: 8px 12px; }
+    .notificationSection { padding: 5px 10px; }
+    #notificationBox { padding: 5px 8px; }
+    #notificationBox p { margin: 3px 0; }
+    .footer { padding: 4px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HOME PAGE -->
 <section class="home">
     <div class="content">
-
         <h1 id="siteTitle">Digital Family Memories</h1>
 
         <div class="subtitle" id="welcomeText">
@@ -242,19 +204,13 @@ h1 {
             together.
         </div>
 
-        <a href="family.html" class="enterBtn">
-            🚪 Join Family
-        </a>
-
+        <a href="family.html" class="enterBtn">🚪 Join Family</a>
     </div>
 </section>
 
-<!-- BOTTOM NOTIFICATION BOX -->
 <section class="notificationSection">
     <div id="notificationBox">
-
         <h3>🔔 Family Notifications</h3>
-
         <p>Get alerts for new public family updates.</p>
 
         <button id="subscribeNotifications" type="button">
@@ -264,7 +220,6 @@ h1 {
         <p id="notificationMessage" role="status" aria-live="polite">
             Subscribe to request notifications.
         </p>
-
     </div>
 </section>
 
@@ -302,14 +257,11 @@ async function loadHomeSettings() {
         if (data.site_title) {
             document.getElementById("siteTitle").textContent =
                 data.site_title;
-
             document.title = data.site_title;
         }
 
         if (data.welcome_text) {
-            const welcome =
-                document.getElementById("welcomeText");
-
+            const welcome = document.getElementById("welcomeText");
             welcome.textContent = data.welcome_text;
             welcome.style.whiteSpace = "pre-line";
         }
@@ -319,16 +271,14 @@ async function loadHomeSettings() {
                 data.footer_text;
         }
 
-        if (data.background_image_url) {
-            const imageURL = data.background_image_url;
-
-            if (imageURL.startsWith("https://")) {
-                document.querySelector(".home").style.backgroundImage =
-                    "linear-gradient(rgba(20,42,45,0.16),rgba(20,42,45,0.38)),url(" +
-                    JSON.stringify(imageURL) + ")";
-            }
+        if (
+            typeof data.background_image_url === "string" &&
+            data.background_image_url.startsWith("https://")
+        ) {
+            document.querySelector(".home").style.backgroundImage =
+                "linear-gradient(rgba(20,42,45,.16),rgba(20,42,45,.38)),url(" +
+                JSON.stringify(data.background_image_url) + ")";
         }
-
     } catch (error) {
         console.error("Could not load home settings:", error);
     }
@@ -341,25 +291,22 @@ if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
         navigator.serviceWorker.register("./sw.js")
             .then(function () {
-                console.log("Notification service worker is ready.");
+                console.log("Service worker registered.");
             })
             .catch(function (error) {
-                console.error(
-                    "Service worker registration failed:",
-                    error
-                );
+                console.error("Service worker registration failed:", error);
             });
     });
 }
 
-/* PUBLIC FAMILY UPDATE NOTIFICATIONS */
+/* PUBLIC FAMILY NOTIFICATIONS */
 const VAPID_PUBLIC_KEY =
     "BIfG6lv2b_aZWqHLbZj09H2ccAHVcuitEev3cntVm5g8rU_kAx9i_eLmqQHpr66nC5zV3zWm-oUGoZonkXu6pgo";
 
+/* This name must match the deployed Supabase function name. */
 const NOTIFICATION_FUNCTION =
-    "https://brhryltwlfjhwwjovcdq.supabase.co/functions/v1/family-notifications";
+    "https://brhryltwlfjhwwjovcdq.supabase.co/functions/v1/family-notification";
 
-/* NOTIFICATION PROJECT PUBLISHABLE KEY */
 const NOTIFICATION_SUPABASE_KEY =
     "sb_publishable__y9mnVnV_QzD5vuVJXrzIQ_IkVlpvh1";
 
@@ -375,18 +322,19 @@ function decodeVapidKey(key) {
 
     return Uint8Array.from(
         raw,
-        char => char.charCodeAt(0)
+        character => character.charCodeAt(0)
     );
 }
 
 /* REQUEST NOTIFICATION SUBSCRIPTION */
 document.getElementById("subscribeNotifications")
     .addEventListener("click", async function () {
-
         const message =
             document.getElementById("notificationMessage");
 
         const button = this;
+
+        button.disabled = true;
 
         try {
             if (
@@ -395,24 +343,29 @@ document.getElementById("subscribeNotifications")
                 !("Notification" in window)
             ) {
                 message.textContent =
-                    "This browser does not support push notifications.";
+                    "Push notifications are not supported by this browser.";
                 return;
             }
 
-            button.disabled = true;
-            message.textContent = "Preparing subscription...";
+            if (!window.isSecureContext) {
+                message.textContent =
+                    "Open the published HTTPS website in Chrome.";
+                return;
+            }
 
-            const permission =
-                await Notification.requestPermission();
+            message.textContent = "Checking notification permission...";
+
+            const permission = await Notification.requestPermission();
 
             if (permission !== "granted") {
                 message.textContent =
-                    "Notification permission was not granted. Check browser settings.";
+                    "Notifications are blocked. Allow them in Chrome site settings.";
                 return;
             }
 
-            const registration =
-                await navigator.serviceWorker.ready;
+            message.textContent = "Preparing subscription...";
+
+            const registration = await navigator.serviceWorker.ready;
 
             let subscription =
                 await registration.pushManager.getSubscription();
@@ -428,41 +381,66 @@ document.getElementById("subscribeNotifications")
 
             message.textContent = "Sending your request...";
 
-            const response = await fetch(NOTIFICATION_FUNCTION, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": NOTIFICATION_SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + NOTIFICATION_SUPABASE_KEY
-                },
-                body: JSON.stringify({
-                    action: "subscribe",
-                    subscription: subscription.toJSON()
-                })
-            });
+            let response;
 
-            const result = await response.json();
+            try {
+                response = await fetch(NOTIFICATION_FUNCTION, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "apikey": NOTIFICATION_SUPABASE_KEY,
+                        "Authorization":
+                            "Bearer " + NOTIFICATION_SUPABASE_KEY
+                    },
+                    body: JSON.stringify({
+                        action: "subscribe",
+                        subscription: subscription.toJSON()
+                    })
+                });
+            } catch (networkError) {
+                throw new Error(
+                    "Cannot reach the notification server. Check the function deployment, URL and CORS settings."
+                );
+            }
+
+            const responseText = await response.text();
+
+            let result = {};
+
+            try {
+                result = responseText ? JSON.parse(responseText) : {};
+            } catch (parseError) {
+                result = {};
+            }
 
             if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error(
+                        "Supabase returned 404. Deploy the family-notification function and verify its name."
+                    );
+                }
+
+                if (response.status === 401 || response.status === 403) {
+                    throw new Error(
+                        "The server rejected this request. Check the function's authentication and permissions."
+                    );
+                }
+
                 throw new Error(
                     result.error ||
-                    "The subscription request failed."
+                    "The server returned HTTP " + response.status + "."
                 );
             }
 
             message.textContent =
-                "Your request was sent and is awaiting approval.";
+                result.message ||
+                "Your notification request was received.";
 
         } catch (error) {
-            console.error(
-                "Notification subscription error:",
-                error
-            );
+            console.error("Notification subscription error:", error);
 
             message.textContent =
-                "Could not complete request: " +
-                (error.message || "Please try again.");
+                error.message || "The notification request failed.";
 
         } finally {
             button.disabled = false;
@@ -471,4 +449,4 @@ document.getElementById("subscribeNotifications")
 </script>
 
 </body>
-      </html>
+    </html>
